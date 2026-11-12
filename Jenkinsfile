@@ -41,12 +41,23 @@ pipeline {
             }
         }
 
+        stage('Generate Build Information') {
+            steps {
+                script {
+                    env.BUILD_MESSAGE = "Build-${env.BUILD_NUMBER}"
+                }
+        
+                echo "Generated value: ${env.BUILD_MESSAGE}"
+            }
+        }
+        
         stage('Test') {
             environment {
                 DEPLOY_ENV = 'Testing'
             }
         
             steps {
+                echo "Received value: ${env.BUILD_MESSAGE}"
                 echo "Running tests for: ${env.APP_NAME}"
                 echo "Current environment: ${env.DEPLOY_ENV}"
         
@@ -63,6 +74,7 @@ pipeline {
             steps {
                 echo 'Pipeline completed successfully!'
                 echo "Final pipeline environment: ${env.DEPLOY_ENV}"
+                echo "Final build information: ${env.BUILD_MESSAGE}"
             }
         }
     }
