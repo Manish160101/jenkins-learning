@@ -70,6 +70,17 @@ pipeline {
             }
         }
 
+        stage('Deploy') {
+            when {
+                environment name: 'DEPLOY_ENV', value: 'Production'
+            }
+            steps {
+                echo "Deploying ${env.APP_NAME}"
+                echo "Target environment: ${env.DEPLOY_ENV}"
+                echo "Version: ${env.APP_VERSION}"
+            }
+        }
+        
         stage('Finish') {
             steps {
                 echo 'Pipeline completed successfully!'
