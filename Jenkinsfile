@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         APP_NAME = 'Jenkins Learning'
-        DEPLOY_ENV = 'Development'
+        DEPLOY_ENV = 'Production'
         APP_VERSION = '1.0'
     }
     
