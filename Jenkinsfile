@@ -194,9 +194,23 @@ pipeline {
         
                 archiveArtifacts artifacts: 'release-info.txt',
                                  fingerprint: true
+                stash name: 'release-info',
+                      includes: 'release-info.txt'
             }
         }
 
+        stage('Retrieve Stashed Artifact') {
+            steps {
+                dir('artifact-check') {
+                    unstash 'release-info'
+        
+                    echo 'Retrieved release information:'
+        
+                    bat 'type release-info.txt'
+                }
+            }
+        }
+        
         stage('Production Approval') {
             when {
                 expression {
