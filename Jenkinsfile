@@ -2,6 +2,12 @@
 pipeline {
     agent any
 
+    environment {
+        APP_NAME = 'Jenkins Learning'
+        DEPLOY_ENV = 'Development'
+        APP_VERSION = '1.0'
+    }
+    
     stages {
 
         stage('Build') {
@@ -18,6 +24,20 @@ pipeline {
                 echo "Build ID: ${env.BUILD_ID}"
                 echo "Workspace: ${env.WORKSPACE}"
                 echo "Build URL: ${env.BUILD_URL}"
+            }
+        }
+
+        stage('Custom Environment Variables') {
+            steps {
+                echo "Application: ${env.APP_NAME}"
+                echo "Environment: ${env.DEPLOY_ENV}"
+                echo "Version: ${env.APP_VERSION}"
+        
+                bat '''
+                    echo Application: %APP_NAME%
+                    echo Environment: %DEPLOY_ENV%
+                    echo Version: %APP_VERSION%
+                '''
             }
         }
 
