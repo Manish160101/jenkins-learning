@@ -111,6 +111,24 @@ pipeline {
             }
         }
 
+        stage('Error Handling Demo') {
+            steps {
+                script {
+                    try {
+                        echo 'Starting operation...'
+        
+                        bat 'exit /b 1'
+        
+                        echo 'Operation completed.'
+                    }
+                    catch (Exception e) {
+                        echo 'An error occurred!'
+                        echo "Error message: ${e.getMessage()}"
+                    }
+                }
+            }
+        }
+
         stage('Generate Test Report') {
             steps {
                 writeFile file: 'test-results.xml', text: '''<?xml version="1.0" encoding="UTF-8"?>
