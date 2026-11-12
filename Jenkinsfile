@@ -57,7 +57,42 @@ pipeline {
                 bat 'call build.bat'
             }
         }
-
+        
+        stage('Parallel Checks') {
+            parallel {
+        
+                stage('Check HTML') {
+                    steps {
+                        echo 'Checking HTML file...'
+        
+                        bat '''
+                            if exist index.html (
+                                echo HTML file exists.
+                            ) else (
+                                echo HTML file missing.
+                                exit /b 1
+                            )
+                        '''
+                    }
+                }
+        
+                stage('Check README') {
+                    steps {
+                        echo 'Checking README file...'
+        
+                        bat '''
+                            if exist README.md (
+                                echo README file exists.
+                            ) else (
+                                echo README file missing.
+                                exit /b 1
+                            )
+                        '''
+                    }
+                }
+            }
+        }
+        
         stage('Environment Information') {
             steps {
                 echo "Job Name: ${env.JOB_NAME}"
