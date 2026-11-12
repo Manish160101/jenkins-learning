@@ -77,6 +77,26 @@ pipeline {
             }
         }
 
+        stage('Package') {
+            steps {
+                script {
+                    writeFile(
+                        file: 'release-info.txt',
+                        text: """Application: ${env.APP_NAME}
+                                 Version: ${env.APP_VERSION}
+                                 Build Number: ${env.BUILD_NUMBER}
+                                 Environment: ${params.DEPLOY_ENV}
+                              """
+                    )
+                }
+        
+                echo 'Release information file created.'
+        
+                archiveArtifacts artifacts: 'release-info.txt',
+                                 fingerprint: true
+            }
+        }
+        
         stage('Deploy') {
             when {
                 expression {
