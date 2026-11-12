@@ -42,8 +42,19 @@ pipeline {
         }
 
         stage('Test') {
+            environment {
+                DEPLOY_ENV = 'Testing'
+            }
+        
             steps {
-                echo 'Running validation tests...'
+                echo "Running tests for: ${env.APP_NAME}"
+                echo "Current environment: ${env.DEPLOY_ENV}"
+        
+                bat '''
+                    echo Windows CMD environment:
+                    echo %DEPLOY_ENV%
+                '''
+        
                 bat 'if exist index.html (echo Test Passed) else (exit /b 1)'
             }
         }
@@ -51,6 +62,7 @@ pipeline {
         stage('Finish') {
             steps {
                 echo 'Pipeline completed successfully!'
+                echo "Final pipeline environment: ${env.DEPLOY_ENV}"
             }
         }
     }
