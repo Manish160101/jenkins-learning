@@ -5,11 +5,20 @@ echo Starting Jenkins Build
 echo ==========================
 
 echo.
-echo Project: Jenkins Learning
+echo Checking required project files...
+
+if not exist "index.html" (
+    echo ERROR: index.html is missing!
+    exit /b 1
+)
+
+if not exist "README.md" (
+    echo ERROR: README.md is missing!
+    exit /b 1
+)
 
 echo.
-echo Checking project files...
-dir
+echo All required files are present.
 
 echo.
 echo Reading README...
