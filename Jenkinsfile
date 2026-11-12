@@ -17,6 +17,27 @@ pipeline {
     
     stages {
 
+        stage('Credential Demo') {
+            steps {
+                withCredentials([
+                    string(
+                        credentialsId: 'demo-secret',
+                        variable: 'DEMO_TOKEN'
+                    )
+                ]) {
+                    bat '''
+                        echo Credential has been loaded successfully.
+                        if defined DEMO_TOKEN (
+                            echo Credential is available.
+                        ) else (
+                            echo Credential is missing.
+                            exit /b 1
+                        )
+                    '''
+                }
+            }
+        }
+        
         stage('Build') {
             steps {
                 echo 'Starting build...'
