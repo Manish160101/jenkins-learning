@@ -24,4 +24,18 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            echo 'Pipeline execution has finished.'
+        }
+
+        success {
+            echo 'Congratulations! Pipeline SUCCESS.'
+        }
+
+        failure {
+            echo 'Pipeline FAILED. Please check Console Output.'
+        }
+    }
 }
