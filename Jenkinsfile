@@ -2,6 +2,19 @@
 pipeline {
     agent any
 
+    options {
+        timestamps()
+    
+        timeout(
+            time: 10,
+            unit: 'MINUTES'
+        )
+    
+        buildDiscarder(
+            logRotator(numToKeepStr: '10')
+        )
+    }
+
     environment {
         APP_NAME = 'Jenkins Learning'
         APP_VERSION = '1.0'
