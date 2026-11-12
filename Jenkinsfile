@@ -4,8 +4,15 @@ pipeline {
 
     environment {
         APP_NAME = 'Jenkins Learning'
-        DEPLOY_ENV = 'Production'
         APP_VERSION = '1.0'
+    }
+
+    parameters {
+        choice(
+            name: 'DEPLOY_ENV',
+            choices: ['Development', 'Testing', 'Production'],
+            description: 'Select deployment environment'
+        )
     }
     
     stages {
@@ -72,11 +79,13 @@ pipeline {
 
         stage('Deploy') {
             when {
-                environment name: 'DEPLOY_ENV', value: 'Production'
+                expression {
+                    params.DEPLOY_ENV == 'Production'
+                }
             }
             steps {
-                echo "Deploying ${env.APP_NAME}"
-                echo "Target environment: ${env.DEPLOY_ENV}"
+                echo "Application: ${env.APP_NAME}"
+                echo "Selected environment: ${params.DEPLOY_ENV}"
                 echo "Version: ${env.APP_VERSION}"
             }
         }
