@@ -261,5 +261,10 @@ pipeline {
         failure {
             echo 'Pipeline FAILED. Please check Console Output.'
         }
+
+        cleanup {
+            echo 'Cleaning Jenkins workspace...'
+            cleanWs()
+        }
     }
 }
