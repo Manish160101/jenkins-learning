@@ -196,6 +196,22 @@ pipeline {
                                  fingerprint: true
             }
         }
+
+        stage('Production Approval') {
+            when {
+                expression {
+                    params.DEPLOY_ENV == 'Production'
+                }
+            }
+            steps {
+                script {
+                    input(
+                        message: 'Do you approve production deployment?',
+                        ok: 'Approve Deployment'
+                    )
+                }
+            }
+        }
         
         stage('Deploy') {
             when {
