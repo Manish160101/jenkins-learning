@@ -7,8 +7,8 @@ echo ==========================
 echo.
 echo Checking required project files...
 
-if not exist "index.html" (
-    echo ERROR: index.html is missing!
+if not exist "missing.html" (
+    echo ERROR: missing.html is missing!
     exit /b 1
 )
 
